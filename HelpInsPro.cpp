@@ -1,22 +1,22 @@
-/*HelpInsPro.cppÓÃÀ´¶¨ÒåInsProÖĞ»áÓÃµ½µÄ¸¨Öúº¯Êı*/
-//±àÒëÏµÍ³Í·ÎÄ¼ş
+/*HelpInsPro.cppç”¨æ¥å®šä¹‰InsProä¸­ä¼šç”¨åˆ°çš„è¾…åŠ©å‡½æ•°*/
+//ç¼–è¯‘ç³»ç»Ÿå¤´æ–‡ä»¶
 #include<string>
 #include<iostream>
 #include<vector>
 #include<ctype.h>
 #include<math.h>
-//×Ô¶¨ÒåÍ·ÎÄ¼ş
+//è‡ªå®šä¹‰å¤´æ–‡ä»¶
 #include"MyRegister.h"
 #include"assistFun.h"
 #include"Struct_self.h"
-//±¾º¯ÊıÓÃÀ´´¦ÀímovÖ¸ÁîÖĞ¼Ä´æÆ÷Ö®¼äµÄ¸³Öµ
-//*chÎªÊäÈëµÄ×Ö·û´®Êı×é£¬a£ºÎªĞèÒªÊ¶±ğµÄÀàĞÍ£¬
-//1:¼Ä´æÆ÷¸ßÎ»µÍÎ»Ö®¼ä¸³Öµ£»2:¼Ä´æÆ÷Ö®¼ä¸³Öµ£»3:¶Î¼Ä´æÆ÷¸³¸ø¼Ä´æÆ÷
+//æœ¬å‡½æ•°ç”¨æ¥å¤„ç†movæŒ‡ä»¤ä¸­å¯„å­˜å™¨ä¹‹é—´çš„èµ‹å€¼
+//*chä¸ºè¾“å…¥çš„å­—ç¬¦ä¸²æ•°ç»„ï¼Œaï¼šä¸ºéœ€è¦è¯†åˆ«çš„ç±»å‹ï¼Œ
+//1:å¯„å­˜å™¨é«˜ä½ä½ä½ä¹‹é—´èµ‹å€¼ï¼›2:å¯„å­˜å™¨ä¹‹é—´èµ‹å€¼ï¼›3:æ®µå¯„å­˜å™¨èµ‹ç»™å¯„å­˜å™¨
 unsigned char TwoRegBin(std::string *ch, int n)
 {
 	using namespace std;
 	int i, j;
-	int num1=16, num2=16;//´¢´æÊı×é´óĞ¡
+	int num1=16, num2=16;//å‚¨å­˜æ•°ç»„å¤§å°
 	int a, b;
 	const string *m1,*m2;
 	string ch0 = ch[0];
@@ -42,7 +42,7 @@ unsigned char TwoRegBin(std::string *ch, int n)
 		m2 = reg3;
 	}
 	else{
-		std::cout << "TwoRegBinº¯Êı²ÎÊı´íÎó£¡error-002£¡\n";
+		std::cout << "TwoRegBinå‡½æ•°å‚æ•°é”™è¯¯ï¼error-002ï¼\n";
 		return NULL;
 	}
 	a = num1 / 2 - 1;//a=7
@@ -56,12 +56,12 @@ unsigned char TwoRegBin(std::string *ch, int n)
 			return 0xc0 + i+j*8;
 		}
 	}
-	//cout << "Î´ÄÜ¼ÆËã³öºÏÊÊÖµ£¡error--020£¡" << endl;
+	//cout << "æœªèƒ½è®¡ç®—å‡ºåˆé€‚å€¼ï¼error--020ï¼" << endl;
 	return NULL;
 }
 
 unsigned char RegACDB(const std::string& str, short num)
-{
+{//ä¸ºäº†ä¿è¯æ•ˆç‡ï¼Œå¯ä»¥ä½¿ç”¨è¿ç»­çš„ifè¯­å¥ï¼Œæœ‰å¾ˆé«˜çš„å¯è¯»æ€§ï¼Œä½†ç¼ºä¹çµæ´»æ€§
 	if (num == 2){
 		if (str == "AX")return AX_HEX;
 		if (str == "CX")return CX_HEX;
@@ -101,7 +101,7 @@ unsigned char RegACDB(const std::string& str, short num)
 	return 0;
 }
 
-//HexOctÊäÈëÒ»¸öÊ®Áù½øÖÆ×Ö·û£¬·µ»Ø¶ÔÓ¦µÄÕûÊı
+//HexOctè¾“å…¥ä¸€ä¸ªåå…­è¿›åˆ¶å­—ç¬¦ï¼Œè¿”å›å¯¹åº”çš„æ•´æ•°
 short HexOct(char ch)
 {
 	switch (ch){
@@ -128,10 +128,10 @@ short HexOct(char ch)
 	case 'E':return 14;
 	case 'F':return 15;
 	}
-	std::cout << "HexOct²ÎÊı´íÎó£¡error-003£¡\n" ;
+	std::cout << "HexOctå‚æ•°é”™è¯¯ï¼error-003ï¼\n" ;
 	return -1;
 }
-//IsHexNumÊäÈëÒ»¸ö×Ö·û£¬È·ÈÏÊÇ·ñÊôÓÚ16½øÖÆ×Ö·û
+//IsHexNumè¾“å…¥ä¸€ä¸ªå­—ç¬¦ï¼Œç¡®è®¤æ˜¯å¦å±äº16è¿›åˆ¶å­—ç¬¦
 bool IsHexNum(const std::string& str)
 {
 	for (int i = 0; i < (int)str.size(); i++){
@@ -140,7 +140,7 @@ bool IsHexNum(const std::string& str)
 	return true;
 }
 
-//½«Ò»¸öÕûÊı×ª»¯Îª unsigned char Êı×é£¬n:ÕûÊı£»num£ºÊä³öÊı×éÔªËØÊıÁ¿
+//å°†ä¸€ä¸ªæ•´æ•°è½¬åŒ–ä¸º unsigned char æ•°ç»„ï¼Œn:æ•´æ•°ï¼›numï¼šè¾“å‡ºæ•°ç»„å…ƒç´ æ•°é‡
 std::vector<unsigned char>NumToUc(long n,int num)
 {
 	std::vector<unsigned char>data;
@@ -152,7 +152,7 @@ std::vector<unsigned char>NumToUc(long n,int num)
 	//std::cout << "data.size=" << data.size() << std::endl;
 	return data;
 }
-//²éÕÒ×Ö·û´®ÖĞÊÇ·ñ°üº¬
+//æŸ¥æ‰¾å­—ç¬¦ä¸²ä¸­æ˜¯å¦åŒ…å«
 char FoundMathChar(const std::string& str)
 {
 	for (int i = 0; i < (int)str.size(); ++i){
@@ -168,13 +168,13 @@ char FoundMathChar(const std::string& str)
 	return NULL;
 }
 
-//½«16½øÖÆ»ò10½øÖÆ×Ö·û´®×ª»¯ÎªÕûÊı¡£str:×Ö·û´®;num:Ö÷ÎÄ¼şÖĞµÄnumber
+//å°†16è¿›åˆ¶æˆ–10è¿›åˆ¶å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´æ•°ã€‚str:å­—ç¬¦ä¸²;num:ä¸»æ–‡ä»¶ä¸­çš„number
 long IntNum(const std::string& str,int num)
 {
 	using namespace std;
 	int i, sum = 0, n = str.size();
 	//char c = FoundMathChar(str);
-	//²é¿´ÊÇ·ñÓĞBYTE WORDµÈ±êÊ¶·û
+	//æŸ¥çœ‹æ˜¯å¦æœ‰BYTE WORDç­‰æ ‡è¯†ç¬¦
 
 	if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X')){
 		for (i = 2; i<n; ++i){
@@ -183,35 +183,35 @@ long IntNum(const std::string& str,int num)
 		return sum;
 	}
 	else if (IsHexNum(str)){
-		//½«Êı×Ö×Ö·û´®×ª»¯Îª¿É¹©Êä³öµÄ¸ñÊ½
+		//å°†æ•°å­—å­—ç¬¦ä¸²è½¬åŒ–ä¸ºå¯ä¾›è¾“å‡ºçš„æ ¼å¼
 		for (i = 0; i < n; ++i){
 			sum += (int)pow(10.0, (double)(n - i - 1))*HexOct(str[i]);
 		}
 		return sum;
 	}
 	else if (str == "$")return num;
-	//cout << "Num×ª»»´íÎó£¬ÇëÈ·ÈÏÎª¼Ä´æÆ÷µÄ¸³ÖµÕıÈ·£¡error-004!" << endl;
-	//¿ÉÄÜÊÇ±êºÅ×Ö·û´®
+	//cout << "Numè½¬æ¢é”™è¯¯ï¼Œè¯·ç¡®è®¤ä¸ºå¯„å­˜å™¨çš„èµ‹å€¼æ­£ç¡®ï¼error-004!" << endl;
+	//å¯èƒ½æ˜¯æ ‡å·å­—ç¬¦ä¸²
 	return -1;
 }
-//½«16½øÖÆ»ò10½øÖÆ×Ö·û´®×ª»¯ÎªºÏÊÊĞ´ÈëÎÄ¼şµÄÖµ¡£str:×Ö·û´®£»num:Êä³öÊı×éÔªËØÊıÁ¿;a£ºmain.cppÖĞµÄNumber£¨¼´Ö¸ÁîÖĞµÄ$£©£¬ÈçÊäÈëµÄ×Ö·û´®ÎŞ·¨×ª»¯ÎªÊı×é£¬ÔòÊä³öµÄÊı×é´óĞ¡Îª0£»
+//å°†16è¿›åˆ¶æˆ–10è¿›åˆ¶å­—ç¬¦ä¸²è½¬åŒ–ä¸ºåˆé€‚å†™å…¥æ–‡ä»¶çš„å€¼ã€‚str:å­—ç¬¦ä¸²ï¼›num:è¾“å‡ºæ•°ç»„å…ƒç´ æ•°é‡;aï¼šmain.cppä¸­çš„Numberï¼ˆå³æŒ‡ä»¤ä¸­çš„$ï¼‰ï¼Œå¦‚è¾“å…¥çš„å­—ç¬¦ä¸²æ— æ³•è½¬åŒ–ä¸ºæ•°ç»„ï¼Œåˆ™è¾“å‡ºçš„æ•°ç»„å¤§å°ä¸º0ï¼›
 std::vector<unsigned char>Num(const std::string& str,int num,int a)
 {
 	using namespace std;
 	vector<unsigned char>data;
 	int i,sum=0,n = str.size();
-	char c = FoundMathChar(str);//²éÕÒÔËËã·ûºÅ
+	char c = FoundMathChar(str);//æŸ¥æ‰¾è¿ç®—ç¬¦å·
 	if (c){
 		string ch[2];
 		long k[2];
 		ch[0] = CutStr(str, 0);
 		ch[1] = CutStr(str, str.find(c) + 1);
-		//´ËÊ±£¬ch·Ö±ğ´¢´æÁËÔËËã·ûÁ½±ßµÄÊı×Ö×Ö·û´®£¬µ÷ÓÃIntNumº¯Êı×ª»»ÎªÕûÊı
+		//æ­¤æ—¶ï¼Œchåˆ†åˆ«å‚¨å­˜äº†è¿ç®—ç¬¦ä¸¤è¾¹çš„æ•°å­—å­—ç¬¦ä¸²ï¼Œè°ƒç”¨IntNumå‡½æ•°è½¬æ¢ä¸ºæ•´æ•°
 		k[0] = IntNum(ch[0],a);
 		k[1] = IntNum(ch[1],a);
 		//cout << "k[0]=" << k[0] << endl;
 		//cout << "k[1]=" << k[1] << endl;
-		//cout << "ÊıÑ§·ûºÅ£º" << c << endl;
+		//cout << "æ•°å­¦ç¬¦å·ï¼š" << c << endl;
 		switch (c){
 		case '+':return NumToUc(k[0] + k[1], num);
 		case '-':return NumToUc(k[0] - k[1], num);
@@ -227,7 +227,7 @@ std::vector<unsigned char>Num(const std::string& str,int num,int a)
 		return NumToUc(sum,num);
 	}
 	else if (IsHexNum(str)){
-		//½«Êı×Ö×Ö·û´®×ª»¯Îª¿É¹©Êä³öµÄ¸ñÊ½
+		//å°†æ•°å­—å­—ç¬¦ä¸²è½¬åŒ–ä¸ºå¯ä¾›è¾“å‡ºçš„æ ¼å¼
 		for (i = 0; i < n; ++i){
 			sum += (int)pow(10.0, (double)(n - i - 1))*HexOct(str[i]);
 		}
@@ -235,8 +235,8 @@ std::vector<unsigned char>Num(const std::string& str,int num,int a)
 		return NumToUc(sum, num);
 	}
 	else{
-		//cout << "Num×ª»»´íÎó£¬ÇëÈ·ÈÏÎª¼Ä´æÆ÷µÄ¸³ÖµÕıÈ·£¡error-004!" << endl;
-		//¿ÉÄÜÊÇ±êºÅ×Ö·û´®,·µ»ØdataµÄ´óĞ¡Îª0
+		//cout << "Numè½¬æ¢é”™è¯¯ï¼Œè¯·ç¡®è®¤ä¸ºå¯„å­˜å™¨çš„èµ‹å€¼æ­£ç¡®ï¼error-004!" << endl;
+		//å¯èƒ½æ˜¯æ ‡å·å­—ç¬¦ä¸²,è¿”å›dataçš„å¤§å°ä¸º0
 		return data;
 	}
 	return data;
@@ -320,10 +320,10 @@ unsigned char regsub(const std::string& str, int num)
 	return NULL;
 }
 
-/*//str´«Èë×Ö·û´®Àı£º0xab,BYTE 0xab,WORD 0xab,BYTE 123,WORD 123,123
+/*//strä¼ å…¥å­—ç¬¦ä¸²ä¾‹ï¼š0xab,BYTE 0xab,WORD 0xab,BYTE 123,WORD 123,123
 std::vector<unsigned char>Num_cut(const std::string& str,int num)
 {
-	//²éÕÒ¿Õ¸ñ£¬ÕÒµ½ºó½ØÈ¡×Ö·û´®
+	//æŸ¥æ‰¾ç©ºæ ¼ï¼Œæ‰¾åˆ°åæˆªå–å­—ç¬¦ä¸²
 	using namespace std;
 	string ch[2];
 	//ch[0] = str.substr(0, str.find(0x20));
@@ -331,41 +331,41 @@ std::vector<unsigned char>Num_cut(const std::string& str,int num)
 	int j = str.find('\t');
 	vector<unsigned char>d;
 	if ( i<(int)str.size() ||  j<(int)str.size()){
-		//µ±º¬ÓĞ¿Õ¸ñ»òÌø¸ñµÄ»°£¬ËµÃ÷Ó¦¸Ã´øÓĞÀàĞÍËµÃ÷byte»òword,½øĞĞ½ØÈ¡
+		//å½“å«æœ‰ç©ºæ ¼æˆ–è·³æ ¼çš„è¯ï¼Œè¯´æ˜åº”è¯¥å¸¦æœ‰ç±»å‹è¯´æ˜byteæˆ–word,è¿›è¡Œæˆªå–
 		i = Min(i, j);
 		ch[0] = str.substr(0, i);
 		ch[1] = str.substr(i + 1, str.size() - i - 1);
 		if (ch[0] == "byte" || ch[0] == "BYTE"){
-			//µ±ÅĞ¶ÏÎªbyteÊ±£¬µ÷ÓÃ×ª»»º¯Êınum(),Êä³ö¿ÉÊ¹ÓÃµÄ×Ö·û´®
+			//å½“åˆ¤æ–­ä¸ºbyteæ—¶ï¼Œè°ƒç”¨è½¬æ¢å‡½æ•°num(),è¾“å‡ºå¯ä½¿ç”¨çš„å­—ç¬¦ä¸²
 			return Num(ch[1] ,1,num);
 		}
 		else if (ch[0] == "word" || ch[0] == "WORD"){
 			return Num(ch[1], 2,num);
 		}
 		else{
-			cout << "´¦Àí´íÎó:" << str << endl;
+			cout << "å¤„ç†é”™è¯¯:" << str << endl;
 			return d;
 		}
 	}
-	//ËµÃ÷²»º¬¿Õ¸ñ»òÌø¸ñ£¬Ö±½Ó·µ»Ø´¦ÀíºÃµÄÊı
+	//è¯´æ˜ä¸å«ç©ºæ ¼æˆ–è·³æ ¼ï¼Œç›´æ¥è¿”å›å¤„ç†å¥½çš„æ•°
 	return Num(str, 2, num);
 }*/
 
-//×¨ÓÃÓÚmovÖ¸ÁîµÄ¸¨Öúº¯Êı
+//ä¸“ç”¨äºmovæŒ‡ä»¤çš„è¾…åŠ©å‡½æ•°
 std::vector<unsigned char>mov_push(const std::string& str, unsigned char b, unsigned char a, int num, STRINF *m1, STRINF *m2)
 {
 	using namespace std;
 	int ch_num;
 	vector<unsigned char>d;
 	vector<unsigned char>data;
-	//±¾Ç¶Ì×ÄÚµÄ´úÂëÊÇ¶Ôch[1]¶Î´úÂëµÄ´¦Àí
+	//æœ¬åµŒå¥—å†…çš„ä»£ç æ˜¯å¯¹ch[1]æ®µä»£ç çš„å¤„ç†
 	if (m2->explain == "byte" || m2->explain == "BYTE"){
-		//ÔÚÕâÀïch[1]ÄÚ²»ÄÜÓĞÖĞÀ¨ºÅ£¬Ö»ÄÜÎªÊıÖµ×Ö·û´®£º
+		//åœ¨è¿™é‡Œch[1]å†…ä¸èƒ½æœ‰ä¸­æ‹¬å·ï¼Œåªèƒ½ä¸ºæ•°å€¼å­—ç¬¦ä¸²ï¼š
 		if (!m2->w){
 			d = Num(m2->str, 1, num);
 			//cout << "*****************" << m2->str << endl;
 			if (d.size() == 0){
-				cout << "´íÎó-008£¡,Çë¼ì²é±¾×Ö·û´®£º" << str << endl;
+				cout << "é”™è¯¯-008ï¼,è¯·æ£€æŸ¥æœ¬å­—ç¬¦ä¸²ï¼š" << str << endl;
 				return data;
 			}
 			else{
@@ -380,23 +380,23 @@ std::vector<unsigned char>mov_push(const std::string& str, unsigned char b, unsi
 			}
 		}
 		else{
-			cout << "´íÎó-009,Çë¼ì²é±¾×Ö·û´®£º" << str << endl;
+			cout << "é”™è¯¯-009,è¯·æ£€æŸ¥æœ¬å­—ç¬¦ä¸²ï¼š" << str << endl;
 			return data;
 		}
 	}
 	if (m2->explain == "word" || m2->explain == "WORD"){
-		//µ±m1->explain == "byte"£¬m2->explain²»ÄÜÎª"word"
-		cout << "´íÎó-010,Çë¼ì²é±¾×Ö·û´®£¨²»ÄÜÎªword£©£º" << str << endl;
+		//å½“m1->explain == "byte"ï¼Œm2->explainä¸èƒ½ä¸º"word"
+		cout << "é”™è¯¯-010,è¯·æ£€æŸ¥æœ¬å­—ç¬¦ä¸²ï¼ˆä¸èƒ½ä¸ºwordï¼‰ï¼š" << str << endl;
 		return data;
 	}
-	//µ±ch[1]ÄÚÃ»ÓĞ×Ö³¤ËµÃ÷·ûÊ±,Ò²²»»áÓĞÖĞÀ¨ºÅ
-	if (!m2->w){//Ã»ÓĞÀ¨ºÅÊ±
-		//ÅĞ¶ÏÊÇ·ñÎªÊı×Ö×Ö·û´®
+	//å½“ch[1]å†…æ²¡æœ‰å­—é•¿è¯´æ˜ç¬¦æ—¶,ä¹Ÿä¸ä¼šæœ‰ä¸­æ‹¬å·
+	if (!m2->w){//æ²¡æœ‰æ‹¬å·æ—¶
+		//åˆ¤æ–­æ˜¯å¦ä¸ºæ•°å­—å­—ç¬¦ä¸²
 		ch_num = IntNum(m2->str, num);
-		//if (ch_num<0){//Ğ¡ÓÚ0ÔòËµÃ÷Îª±êºÅ
+		//if (ch_num<0){//å°äº0åˆ™è¯´æ˜ä¸ºæ ‡å·
 		//cout << "*******" << m2->str << endl;
-		if (ch_num>0xff)cout << "¾¯¸æ,²»ÄÜ´óÓÚ0xff(±àÒë³ÌĞò½«»á¶ªÆúÒç³ö²¿·Ö):" << str << endl;
-		//Õı³£×ª»»Îª1×Ö½Ú£¬
+		if (ch_num>0xff)cout << "è­¦å‘Š,ä¸èƒ½å¤§äº0xff(ç¼–è¯‘ç¨‹åºå°†ä¼šä¸¢å¼ƒæº¢å‡ºéƒ¨åˆ†):" << str << endl;
+		//æ­£å¸¸è½¬æ¢ä¸º1å­—èŠ‚ï¼Œ
 		d = NumToUc(ch_num, 1);
 		data.push_back(b);
 		if (a != 0x00)data.push_back(a);
@@ -407,25 +407,25 @@ std::vector<unsigned char>mov_push(const std::string& str, unsigned char b, unsi
 		data.push_back(d[0]);
 		return data;
 	}
-	cout << "Çë¼ì²é±¾ĞĞ´úÂë£º" << str << endl;
+	cout << "è¯·æ£€æŸ¥æœ¬è¡Œä»£ç ï¼š" << str << endl;
 	return data;
 }
 
-//cmd1:µ±cmd1=¡®b¡¯Ê±£¬ËµÃ÷m1->explain=="byte",µ±cmd1=¡®w¡¯Ê±£¬ËµÃ÷m1->explain=="word";
-//cmd2:È¡Öµ´Ó0~15,·Ö±ğ¶ÔÓ¦ AX~DI,AL~BH¡£
-//cmd1ÓÃÀ´¾ö¶¨ÊÇ·ñÒª¼Ó0x3e£¬cmd2¾ö¶¨Ä¿±ê¼Ä´æÆ÷ÀàĞÍ
-//explain£¬str¶ÔÓ¦m2µÄÖµ
+//cmd1:å½“cmd1=â€˜bâ€™æ—¶ï¼Œè¯´æ˜m1->explain=="byte",å½“cmd1=â€˜wâ€™æ—¶ï¼Œè¯´æ˜m1->explain=="word";
+//cmd2:å–å€¼ä»0~15,åˆ†åˆ«å¯¹åº” AX~DI,AL~BHã€‚
+//cmd1ç”¨æ¥å†³å®šæ˜¯å¦è¦åŠ 0x3eï¼Œcmd2å†³å®šç›®æ ‡å¯„å­˜å™¨ç±»å‹
+//explainï¼Œstrå¯¹åº”m2çš„å€¼
 std::vector<unsigned char>BX_BP_SI_DI(char cmd1, char cmd2, std::string explain,std::string str,int num)
 {
 	using namespace std;
 	bool n=false;
 	short a=0, b=0;
-	//¶¨ÒåÊı×é
+	//å®šä¹‰æ•°ç»„
 	
 
 	vector<unsigned char>data;
 	vector<unsigned char>d;
-	if (cmd1 == 'b' && (cmd2 >= 0 && cmd2 < 8))n = true;//0<=cmd2<8ËµÃ÷Îª16Î»¼Ä´æÆ÷£¬Ö»ÓĞ16Î»¼Ä´æÆ÷Ç°ÃæÖ¸¶¨ÁËbyteÊÇĞèÒªÍÆÈë0x3e
+	if (cmd1 == 'b' && (cmd2 >= 0 && cmd2 < 8))n = true;//0<=cmd2<8è¯´æ˜ä¸º16ä½å¯„å­˜å™¨ï¼Œåªæœ‰16ä½å¯„å­˜å™¨å‰é¢æŒ‡å®šäº†byteæ˜¯éœ€è¦æ¨å…¥0x3e
 	if (cmd2 == 0){ a = 1; b = 0; }
 	if (cmd2 == 1){ a = 1; b = 1; }
 	if (cmd2 == 2){ a = 1; b = 2; }
@@ -473,10 +473,10 @@ std::vector<unsigned char>BX_BP_SI_DI(char cmd1, char cmd2, std::string explain,
 		data.push_back(b1[b][3]);
 		return data;
 	}
-	//ÅĞ¶ÏÒ»ÏÂÊÇ·ñÎªÊı×Ö×Ö·û´®
+	//åˆ¤æ–­ä¸€ä¸‹æ˜¯å¦ä¸ºæ•°å­—å­—ç¬¦ä¸²
 	int number = IntNum(str, num);
-	if (number>-1){//ËµÃ÷numberÊÇÒ»¸öÕıÊı£¬È¡ÖµÓĞĞ§
-		if ((explain == "word" || explain == "WORD" || explain == "n") && cmd1 == 'b'&& cmd2<8){//¶ÔÓ¦µÄÖ¸Áî¸ñÊ½£ºmov byte 16Î»¼Ä´æÆ÷£¬[0x00]
+	if (number>-1){//è¯´æ˜numberæ˜¯ä¸€ä¸ªæ­£æ•°ï¼Œå–å€¼æœ‰æ•ˆ
+		if ((explain == "word" || explain == "WORD" || explain == "n") && cmd1 == 'b'&& cmd2<8){//å¯¹åº”çš„æŒ‡ä»¤æ ¼å¼ï¼šmov byte 16ä½å¯„å­˜å™¨ï¼Œ[0x00]
 			data.push_back(0x3e);
 			data.push_back(0x8b);
 			data.push_back(m_unch[cmd2]);
@@ -484,14 +484,14 @@ std::vector<unsigned char>BX_BP_SI_DI(char cmd1, char cmd2, std::string explain,
 			data.insert(data.end(), d.begin(), d.end());
 			return data;
 		}
-		if (explain == "n" && cmd1 == 'b'&& cmd2 > 7){//¶ÔÓ¦µÄÖ¸Áî¸ñÊ½£ºmov byte 8Î»¼Ä´æÆ÷£¬[0x00]<==>mov 8Î»¼Ä´æÆ÷£¬[0x00]
+		if (explain == "n" && cmd1 == 'b'&& cmd2 > 7){//å¯¹åº”çš„æŒ‡ä»¤æ ¼å¼ï¼šmov byte 8ä½å¯„å­˜å™¨ï¼Œ[0x00]<==>mov 8ä½å¯„å­˜å™¨ï¼Œ[0x00]
 			data.push_back(0x8a);
 			data.push_back(m_unch[cmd2 - 8]);
 			d = NumToUc(number, 2);
 			data.insert(data.end(), d.begin(), d.end());
 			return data;
 		}
-		if ((explain == "word" || explain == "WORD" || explain == "n") && cmd1 == 'w'&& cmd2<8){//¶ÔÓ¦µÄÖ¸Áî¸ñÊ½£ºmov word 16Î»¼Ä´æÆ÷£¬[0x00]<==>mov 16Î»¼Ä´æÆ÷£¬[0x00]
+		if ((explain == "word" || explain == "WORD" || explain == "n") && cmd1 == 'w'&& cmd2<8){//å¯¹åº”çš„æŒ‡ä»¤æ ¼å¼ï¼šmov word 16ä½å¯„å­˜å™¨ï¼Œ[0x00]<==>mov 16ä½å¯„å­˜å™¨ï¼Œ[0x00]
 			if (cmd2 == 0)data.push_back(0xa1);
 			else{
 				data.push_back(0x8b);
@@ -502,15 +502,15 @@ std::vector<unsigned char>BX_BP_SI_DI(char cmd1, char cmd2, std::string explain,
 			data.insert(data.end(), d.begin(), d.end());
 			return data;
 		}
-		if (explain == "n" && cmd1 == 'w'&& cmd2 > 7){//¶ÔÓ¦µÄÖ¸Áî¸ñÊ½£ºmov word 8Î»¼Ä´æÆ÷£¬[0x00];ÕâÖÖ¸ñÊ½ÊÇ´íÎóµÄ
-			cout << "´íÎó-012£¬Çë¼ì²é´úÂë£º" << str << endl;
+		if (explain == "n" && cmd1 == 'w'&& cmd2 > 7){//å¯¹åº”çš„æŒ‡ä»¤æ ¼å¼ï¼šmov word 8ä½å¯„å­˜å™¨ï¼Œ[0x00];è¿™ç§æ ¼å¼æ˜¯é”™è¯¯çš„
+			cout << "é”™è¯¯-012ï¼Œè¯·æ£€æŸ¥ä»£ç ï¼š" << str << endl;
 			return data;
 		}
-		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'b'&& cmd2<8){//¶ÔÓ¦Ö¸Áî¸ñÊ½ mov	byte 16Î»¼Ä´æÆ÷ ,byte [0x23]£»´íÎó£¬Ä¿±ê¼Ä´æÆ÷Ö»ÄÜÊÇ8Î»¼Ä´æÆ÷
-			cout << "´íÎó-013£¬Ä¿±ê¼Ä´æÆ÷Ö»ÄÜÊÇ8Î»¼Ä´æÆ÷:" <<str<< endl;
+		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'b'&& cmd2<8){//å¯¹åº”æŒ‡ä»¤æ ¼å¼ mov	byte 16ä½å¯„å­˜å™¨ ,byte [0x23]ï¼›é”™è¯¯ï¼Œç›®æ ‡å¯„å­˜å™¨åªèƒ½æ˜¯8ä½å¯„å­˜å™¨
+			cout << "é”™è¯¯-013ï¼Œç›®æ ‡å¯„å­˜å™¨åªèƒ½æ˜¯8ä½å¯„å­˜å™¨:" <<str<< endl;
 			return data;
 		}
-		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'b'&& cmd2>7){//¶ÔÓ¦Ö¸Áî¸ñÊ½ mov	byte 8Î»¼Ä´æÆ÷ ,byte [0x23]£»
+		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'b'&& cmd2>7){//å¯¹åº”æŒ‡ä»¤æ ¼å¼ mov	byte 8ä½å¯„å­˜å™¨ ,byte [0x23]ï¼›
 			if (cmd2 == 8)data.push_back(0xa0);
 			else{
 				data.push_back(0x8a);
@@ -520,24 +520,24 @@ std::vector<unsigned char>BX_BP_SI_DI(char cmd1, char cmd2, std::string explain,
 			data.insert(data.end(), d.begin(), d.end());
 			return data;
 		}//************************************************
-		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'w'){//¶ÔÓ¦Ö¸Áî¸ñÊ½ mov	byte 16Î»¼Ä´æÆ÷ ,byte [0x23]£»´íÎó£¬Ä¿±ê¼Ä´æÆ÷Ö»ÄÜÊÇ8Î»¼Ä´æÆ÷
-			cout << "´íÎó-014£¬Ä¿±ê¼Ä´æÆ÷Ö»ÄÜÊÇ16Î»¼Ä´æÆ÷:" << str << endl;
+		if ((explain == "byte" || explain == "BYTE") && cmd1 == 'w'){//å¯¹åº”æŒ‡ä»¤æ ¼å¼ mov	byte 16ä½å¯„å­˜å™¨ ,byte [0x23]ï¼›é”™è¯¯ï¼Œç›®æ ‡å¯„å­˜å™¨åªèƒ½æ˜¯8ä½å¯„å­˜å™¨
+			cout << "é”™è¯¯-014ï¼Œç›®æ ‡å¯„å­˜å™¨åªèƒ½æ˜¯16ä½å¯„å­˜å™¨:" << str << endl;
 			return data;
 		}
-		if ((explain == "word" || explain == "WORD") && cmd1 == 'b'){//´íÎó
-			cout << "´íÎó-015£¬Ä¿±ê¼Ä´æÆ÷Ó¦Ö¸¶¨Îªword:" << str << endl;
+		if ((explain == "word" || explain == "WORD") && cmd1 == 'b'){//é”™è¯¯
+			cout << "é”™è¯¯-015ï¼Œç›®æ ‡å¯„å­˜å™¨åº”æŒ‡å®šä¸ºword:" << str << endl;
 		}
 	}
-	cout << "[]ÄÚ½öÔÊĞíbx¡¢bp¡¢si¡¢di,Çë¼ì²é´úÂë£º" << str << endl;
+	cout << "[]å†…ä»…å…è®¸bxã€bpã€siã€di,è¯·æ£€æŸ¥ä»£ç ï¼š" << str << endl;
 	return data;
 }
-//str£º¼Ä´æÆ÷Ãû³Æ,a:0~3
+//strï¼šå¯„å­˜å™¨åç§°,a:0~3
 std::vector<unsigned char>acdb(unsigned char n1,unsigned char n2,short a,std::string str)
 {
 	using namespace std;
 	vector<unsigned char>data;
 	for (int i = 0; i < 16; ++i){
-		//ÅĞ¶ÏÊÇ·ñÎª16Î»¼Ä´æÆ÷
+		//åˆ¤æ–­æ˜¯å¦ä¸º16ä½å¯„å­˜å™¨
 		if (str == reg2[i]){
 			data.push_back(n1);
 			if (i>7)data.push_back(b1[i-8][a]);
@@ -553,17 +553,17 @@ std::vector<unsigned char>acdb(unsigned char n1,unsigned char n2,short a,std::st
 			return data;
 		}
 	}
-	cout << "Çë¼ì²é´úÂë£º" << str << endl;
+	cout << "è¯·æ£€æŸ¥ä»£ç ï¼š" << str << endl;
 	return data;
 }
-//cmdÎª¿ØÖÆÊı×Ö£¬µ±cmd=1Ê±£¬Ö¸Áî¸ñÊ½£ºmov [0x00],ax £»µ±cmd=2Ê±£¬mov ax£¬[0x00]
+//cmdä¸ºæ§åˆ¶æ•°å­—ï¼Œå½“cmd=1æ—¶ï¼ŒæŒ‡ä»¤æ ¼å¼ï¼šmov [0x00],ax ï¼›å½“cmd=2æ—¶ï¼Œmov axï¼Œ[0x00]
 std::vector<unsigned char>acdb_m1_num(short cmd,std::string str,std::string m1_str,int num)
 {
 	using namespace std;
 	vector<unsigned char>data;
 	vector<unsigned char>d = Num(m1_str, 2, num);
 	unsigned char n_ax=0xa3,n_al=0xa2, n_16=0x89,n_8=0x88,n_s=0x8c;
-	//´¦Àícmd
+	//å¤„ç†cmd
 	if (cmd == 2){
 		n_ax = 0xa1;
 		n_al = 0xa0;
@@ -572,9 +572,9 @@ std::vector<unsigned char>acdb_m1_num(short cmd,std::string str,std::string m1_s
 		n_s = 0x8e;
 	}
 	for (int i = 0; i < 16; ++i){
-		//ÅĞ¶ÏÊÇ·ñÎª16Î»¼Ä´æÆ÷
+		//åˆ¤æ–­æ˜¯å¦ä¸º16ä½å¯„å­˜å™¨
 		if (str == reg2[i]){
-			if (i == 0 || i == 8)//reg[0]¡¢reg[8]¶ÔÓ¦µÄ×Ö·û´®Ê±ax£¬ÌØÊâÇé¿ö
+			if (i == 0 || i == 8)//reg[0]ã€reg[8]å¯¹åº”çš„å­—ç¬¦ä¸²æ—¶axï¼Œç‰¹æ®Šæƒ…å†µ
 				data.push_back(n_ax);
 			else{
 				data.push_back(n_16);
@@ -584,9 +584,9 @@ std::vector<unsigned char>acdb_m1_num(short cmd,std::string str,std::string m1_s
 			data.insert(data.end(), d.begin(), d.end());
 			return data;
 		}
-		//ÅĞ¶ÏÊÇ·ñÎª8Î»¼Ä´æÆ÷
+		//åˆ¤æ–­æ˜¯å¦ä¸º8ä½å¯„å­˜å™¨
 		if (str == reg2[i]){
-			if (i == 0 || i == 8)//reg[0]¡¢reg[8]¶ÔÓ¦µÄ×Ö·û´®Ê±ax£¬ÌØÊâÇé¿ö
+			if (i == 0 || i == 8)//reg[0]ã€reg[8]å¯¹åº”çš„å­—ç¬¦ä¸²æ—¶axï¼Œç‰¹æ®Šæƒ…å†µ
 				data.push_back(n_al);
 			else{
 				data.push_back(n_8);
@@ -621,10 +621,10 @@ std::vector<unsigned char>acdb_m1_num(short cmd,std::string str,std::string m1_s
 		data.insert(data.end(), d.begin(), d.end());
 		return data;
 	}
-	cout << "´íÎó--017,Çë¼ì²é£º" << str<<endl;
+	cout << "é”™è¯¯--017,è¯·æ£€æŸ¥ï¼š" << str<<endl;
 	return data;
 }
-//×¨ÓÃÓÚmovÖ¸ÁîµÄ¸¨Öúº¯Êı
+//ä¸“ç”¨äºmovæŒ‡ä»¤çš„è¾…åŠ©å‡½æ•°
 STRINF *hep(const std::string& str)
 {
 	using namespace std;
@@ -632,17 +632,17 @@ STRINF *hep(const std::string& str)
 	int str_size = str.size();
 	int lk, rk, k;
 	STRINF *m = new STRINF;
-	//È¥³ıÎ²²¿µÄ¿Õ¸ñ
+	//å»é™¤å°¾éƒ¨çš„ç©ºæ ¼
 	while (str_size>0 && (str[str_size - 1] == 0x20 || str[str_size - 1] == '\t'))str_size--;
 	k = str.find(0x20);
 	if (k >= str_size)k = str.find('\t');
-	//k´¢´æÁË¿Õ¸ñµÄÎ»ÖÃ£¬Èç¹ûÓĞµÄ»°£¬·ñÔòk½«ÊÇÒ»¸öÔ¶´óÓÚ×Ö·û´®³¤¶ÈµÄÖµ,»òĞ¡ÓÚ0µÄÖµ
+	//kå‚¨å­˜äº†ç©ºæ ¼çš„ä½ç½®ï¼Œå¦‚æœæœ‰çš„è¯ï¼Œå¦åˆ™kå°†æ˜¯ä¸€ä¸ªè¿œå¤§äºå­—ç¬¦ä¸²é•¿åº¦çš„å€¼,æˆ–å°äº0çš„å€¼
 	if (k < str_size && k >= 0){
 		m->explain = str.substr(0, k);
 		lk = str.find('[');
 		rk = str.find(']');
 	
-		if (lk < str_size && rk < str_size && lk >= 0 && rk >= 0){//ÅĞ¶ÏÖĞÀ¨ºÅ
+		if (lk < str_size && rk < str_size && lk >= 0 && rk >= 0){//åˆ¤æ–­ä¸­æ‹¬å·
 			m->str = str.substr(lk + 1, rk - lk - 1);
 			m->lk = lk;
 			m->rk = rk;
@@ -650,7 +650,7 @@ STRINF *hep(const std::string& str)
 			return m;
 		}
 		else{
-			//Ìø¹ı¿Õ¸ñ»òÕßÌø¸ñ
+			//è·³è¿‡ç©ºæ ¼æˆ–è€…è·³æ ¼
 			while (k < str_size && (str[k] == 0x20 || str[k] == '\t'))k++;
 			m->str = str.substr(k, str_size - k);
 			m->lk = 0;
@@ -659,9 +659,9 @@ STRINF *hep(const std::string& str)
 			return m;
 		}
 	}
-	else{//Ã»ÓĞ¿Õ¸ñ
-		m->explain = "n";//ËµÃ÷·ûÉèÎªn
-		//²éÕÒÖĞÀ¨ºÅ
+	else{//æ²¡æœ‰ç©ºæ ¼
+		m->explain = "n";//è¯´æ˜ç¬¦è®¾ä¸ºn
+		//æŸ¥æ‰¾ä¸­æ‹¬å·
 		lk = str.find('[');
 		rk = str.find(']');
 		

@@ -1,5 +1,4 @@
 ﻿/*本头文件定义了常用的一些二进制码*/
-#pragma once
 #include<string>
 #include<vector>
 //为寄存器赋值的机器码
@@ -261,7 +260,6 @@ const unsigned char BP_DS = 0XDD;
 const unsigned char SI_DS = 0XDE;
 const unsigned char DI_DS = 0XDF;
 
-
 const std::string reg1[16] = { "AH", "AL", "CH", "CL", "DH", "DL", "BH", "BL", "ah", "al", "ch", "cl", "dh", "dl", "bh", "bl" };
 
 const std::string reg_1[16] = { "AL", "CL", "DL", "BL", "AH", "CH", "DH", "BH", "al", "cl", "dl", "bl", "ah", "ch", "dh", "bh" };
@@ -269,7 +267,6 @@ const std::string reg_1[16] = { "AL", "CL", "DL", "BL", "AH", "CH", "DH", "BH", 
 const std::string reg2[16] = { "AX", "CX", "DX", "BX", "SP", "BP", "SI", "DI", "ax", "cx", "dx", "bx", "sp", "bp", "si", "di" };
 
 const std::string reg3[8] = { "ES", "CS", "SS", "DS", "es", "cs", "ss", "ds" };
-
 
 const unsigned char a1[2] = { 0x8a, 0x8b };//0x8a是8位寄存器的，0x8b是16位寄存器的
 const unsigned char b1[8][4] = {

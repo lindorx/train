@@ -20,9 +20,6 @@ std::vector<unsigned char>Move1( STRINF *m1, STRINF *m2,int num)
 	string ch[2];
 	ch[0] = m1->str;
 	ch[1] = m2->str;
-	//ch[0] = CutStr(str,n);
-	//ch[1] = CutStr(str, str.find(',')+1);
-	//cout << ch[0] << '\t' << ch[1] << endl;
 	a=TwoRegBin(ch,1);
 	b=TwoRegBin(ch,2);
 	c=TwoRegBin(ch,3);
@@ -36,7 +33,6 @@ std::vector<unsigned char>Move1( STRINF *m1, STRINF *m2,int num)
 	else if (b){
 		data.push_back(0x89);
 		data.push_back(b);
-		//cout << "**************" << endl;
 		return data;
 	}
 	else if (c){
@@ -337,8 +333,6 @@ std::vector<unsigned char>MOVE(const std::string& str, int k, int num)
 {
 	using namespace std;
 	int str_size = str.size();
-	//vector<unsigned char>data;
-	//vector<unsigned char>d;
 	string *ch;//ch1，ch2分别用来储存逗号前后的字符串（DEST 和 SRC）
 	//跳过空格
 	while (k < str_size && (str[k] == 0x20 || str[k] == '\t'))k++;
@@ -351,11 +345,10 @@ std::vector<unsigned char>MOVE(const std::string& str, int k, int num)
 		if ((m1->explain == "byte" || m1->explain == "BYTE") && (m2->explain == "word" || m2->explain == "WORD"))cout << "警告，请勿使用word，程序将丢弃溢出部分,请检查代码：" << str << endl;
 		return Move1(m1, m2, num);
 	}//有括号时调用Move2
-	//cout << "调用move2" << endl;
 	return Move2(str, m1, m2, num);
 }
 //Data函数，用于处理DB,DW,DD指令,str:该行指令字符串；num：指令字符之后的一字节位置；fix：本指令占用的字节数
-std::vector<unsigned char>DataBWD(const std::string& str, int k, int fix,int num)
+std::vector<unsigned char>DataBWD(const std::string& str, int k, int fix, int num)
 {
 	using namespace std;
 	string ch;
@@ -363,19 +356,23 @@ std::vector<unsigned char>DataBWD(const std::string& str, int k, int fix,int num
 	vector<unsigned char>d;
 	bool w = false;
 	while (k < (int)str.size() && (str[k] == 0x20 || str[k] == '\t'))k++;
-	while (k<(int)str.size() && str[k] != '\n' && str[k] != '\0'){
+	while (k < (int)str.size() && str[k] != '\n' && str[k] != '\0' && str[k] != ';'){
 		if (!w&&str[k] == '"'){ w = true; k++; }
+		if (w&&str[k] == '"'){ break; }
 		if (w){
 			if (str[k] == '"')break;
 			data.push_back(str[k]);
 			k++;
 		}
 		else{
-			ch = CutStrDBWD(str, k);
-			if ((int)ch.size() > 0)k = ch.size() + k + 1;
-			else k++;
+			ch = CutStr(str, k);
+			if ((int)ch.size()>0)k += ch.size()+1;
+			else{
+				k++; continue;
+			}
 			d = Num(ch, fix, num);
 			data.insert(data.end(), d.begin(), d.end());
+			ch.clear();
 		}
 	}
 	return data;
@@ -390,8 +387,8 @@ long Organ(const std::string& str, int n,int num)
 int ReserveByte(const std::string& str, int n, int num)
 {
 	using namespace std;
-	string ch = CutStr(str, n);
-	return IntNum(ch,num);
+	string ch =CutStr(str,n) ;
+	return  IntNum(ch, num);
 }
 
 std::vector<unsigned char>Additive(const std::string& str,int n,int num)
@@ -404,22 +401,18 @@ std::vector<unsigned char>Additive(const std::string& str,int n,int num)
 	string ch[2];
 	ch[0] = CutStr(str, n);
 	ch[1] = CutStr(str, str.find(',') + 1);
-	//cout << ch[0] << '\t' << ch[1] << endl;
 	a = TwoRegBin(ch, 1);
 	b = TwoRegBin(ch, 2);
 	c = TwoRegBin(ch, 3);
 	//检查是否为寄存器之间赋值
 	if (a){
-		//cout << "aaaaaaaaaaaaaaaa"<<endl;
 		data.push_back(0x00);
 		data.push_back(a);
 		return data;
 	}
 	else if (b){
-		//cout << "bbbbbbbbbbbbbbbbb" << endl;
 		data.push_back(0x01);
 		data.push_back(b);
-		//cout << "**************" << endl;
 		return data;
 	}
 	else if (c){
@@ -482,22 +475,18 @@ std::vector<unsigned char>Subtraction(const std::string& str, int n, int num)
 	string ch[2];
 	ch[0] = CutStr(str, n);
 	ch[1] = CutStr(str, str.find(',') + 1);
-	//cout << ch[0] << '\t' << ch[1] << endl;
 	a = TwoRegBin(ch, 1);
 	b = TwoRegBin(ch, 2);
 	c = TwoRegBin(ch, 3);
 	//检查是否为寄存器之间赋值
 	if (a){
-		//cout << "aaaaaaaaaaaaaaaa"<<endl;
 		data.push_back(0x28);
 		data.push_back(a);
 		return data;
 	}
 	else if (b){
-		//cout << "bbbbbbbbbbbbbbbbb" << endl;
 		data.push_back(0x29);
 		data.push_back(b);
-		//cout << "**************" << endl;
 		return data;
 	}
 	else if (c){
@@ -932,9 +921,7 @@ std::vector<unsigned char>Logic(const std::string& str, int n, int num, char w_n
 	}
 	vector<unsigned char>d;
 	int k = IntNum(ch[1], num);
-	cout << "k=" << k << endl;
 	d = NumToUc(k, 2);
-	cout << "d=" << hex<< (int)d[0] << endl;
 	if (d.size() <= 0){
 		cout << "错误-023，请检查指令:" << str << endl;
 		return data;
@@ -1033,7 +1020,6 @@ std::vector<unsigned char>Mul(const std::string& str, int n)
 			cout << "错误-027，请检查代码:" << str << endl; return data;
 		}
 		ch.clear(); ch = str.substr(lk+1, rk - lk-1);
-		cout << "**************" << ch << endl;
 		if (ch == "bx" || ch == "BX"){
 			data.push_back(0x27); return data;
 		}

@@ -1,25 +1,21 @@
 /*InsPro.h用来声明InsPro.cpp文件*/
-#pragma once
 #include<string>
 #include<vector>
-
+//自定义的头文件
 #include"Struct_self.h"
-
-//定义数组
-
 //函数定义
-
+//处理mov指令
 std::vector<unsigned char>MOVE(const std::string& str, int k, int num);
-
-std::vector<unsigned char>Move1(const std::string& str,int n,int num);
-
+//处理没有[]情况下的mov指令
+std::vector<unsigned char>Move1(const std::string& str, int n, int num);
+//处理有[]情况下的mov指令
 std::vector<unsigned char>Move2(const std::string& str, STRINF *m1, STRINF *m2, int num);
-
+//处理org指令
 long Organ(const std::string& str, int n, int num);
 
 //Data函数，用于处理DB,DW,DD指令,str:该行指令字符串；num：指令字符之后的一字节位置；fix：本指令占用的字节数
 std::vector<unsigned char>DataBWD(const std::string& str, int n, int fix, int num);
-
+//resb指令，用于补一定数量的NULL字符
 int ReserveByte(const std::string& str, int num, int all);
 
 //加法指令
@@ -29,9 +25,9 @@ std::vector<unsigned char>Subtraction(const std::string& str, int n, int num);
 
 //处理jmp语句。
 std::vector<unsigned char>Jemp();
-
+//压栈指令
 std::vector<unsigned char>Push(const std::string& str, int n, int num);
-
+//出栈指令
 std::vector<unsigned char>Pop(const std::string& str, int n);
 
 //INT指令为显卡调用指令
@@ -52,7 +48,7 @@ std::vector<unsigned char>Jb();
 
 //用于in，out指令，w用来判断是in还是out，如果w=i，为in，如果是w=o，那么是out指令；
 std::vector<unsigned char>In_Out(const std::string& str, int n, int num, char w);
-
+//用于a逻辑指令and，or，xor
 std::vector<unsigned char>Logic(const std::string& str, int n, int num, char w);
 
 //not取反指令

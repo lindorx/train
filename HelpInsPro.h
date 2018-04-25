@@ -1,10 +1,8 @@
 /*HelpInsPro.h头文件用来声明HelpInsPro.cpp*/
-#pragma once
 #include<string>
 #include<vector>
-
+//自定义的头文件
 #include"Struct_self.h"
-
 //定义辅助函数
 
 unsigned char RegACDB(const std::string& str, short num);
@@ -26,7 +24,6 @@ unsigned char regadd(const std::string& str, int num);
 unsigned char regsub(const std::string& str, int num);
 //处理含有空格或tab的字符串
 std::vector<unsigned char>Num_cut(const std::string& str, int num);
-
 
 //专用于mov指令的辅助函数
 std::vector<unsigned char>mov_push(const std::string& str, unsigned char b, unsigned char a, int num, STRINF *m1, STRINF *m2);

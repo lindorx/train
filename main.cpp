@@ -14,9 +14,9 @@
 #define REG_16 data[0]==AX_HEX || data[0]==CX_HEX || data[0]==DX_HEX || data[0]==BX_HEX || data[0]==SP_HEX || data[0]==BP_HEX || data[0]==SI_HEX || data[0]==DI_HEX
 #define REG_8 data[0]==AL_HEX || data[0]==CL_HEX || data[0]==DL_HEX || data[0]==BL_HEX || data[0]==AH_HEX || data[0]==CH_HEX || data[0]==DH_HEX || data[0]==BH_HEX
 
-int FileSize = 0;//´¢´æÉú³ÉµÄÎÄ¼ş´óĞ¡
-int Number = 0;//´¢´æÆ«ÒÆµØÖ·
-int Line_num = 1;//ĞĞºÅ
+int FileSize;//´¢´æÉú³ÉµÄÎÄ¼ş´óĞ¡
+int Number;//´¢´æÆ«ÒÆµØÖ·
+int Line_num;//ĞĞºÅ
 std::vector<unsigned char>Data;//´¢´æÊä³öÊı¾İÁ÷
 
 std::string fin_src;//Ô´ÎÄ¼şÂ·¾¶
@@ -32,7 +32,7 @@ std::vector<ReTitle>je_p;//´¢´æjeÖ¸ÁîÓöµ½µÄ±êºÅ
 std::vector<ReTitle>jbe_p;//´¢´æjeÖ¸ÁîÓöµ½µÄ±êºÅ
 std::vector<ReTitle>jb_p;//´¢´æjeÖ¸ÁîÓöµ½µÄ±êºÅ
 
-bool is_Title = false;//±êÖ¾Î»£¬Èô´ËÖµÎªtrueËµÃ÷CutStrCode()º¯ÊıÔÚ´úÂëĞĞÖĞÕÒµ½ÁË¡®:¡¯
+bool is_Title;//±êÖ¾Î»£¬Èô´ËÖµÎªtrueËµÃ÷CutStrCode()º¯ÊıÔÚ´úÂëĞĞÖĞÕÒµ½ÁË¡®:¡¯
 //Èô±í´ïÊ½ÎªÕæ£¬ÅĞ¶ÏºóÓ¦ÖØĞÂ¸³ÖµÎªfalse
 
 //´Ë´¦¶¨Òå»áÓÃµ½µÄº¯Êı******************************************************************
@@ -45,20 +45,30 @@ void DataChar(int n, unsigned char ch);//ÏòÊı×éĞ´ÈëÖ¸¶¨×Ö½Ú
 void jmpch(void);//¶ÔjmpÖ¸ÁîµÄºóĞø´¦Àí
 //END************************************************************************************
 //Ö÷º¯Êı
-int main()
+int main(int argc, char* argv[])
 {
 	using namespace std;
-	cout << "Ô´ÎÄ¼şÃû£º";
-	cin >> fin_src;
-	cout << "Ä¿±êÎÄ¼şÃû£º";
-	cin >> fout_src;
-	CompileCode();//´¦ÀíÔ´ÎÄ¼şÁ÷ÎÄ±¾´úÂë£¬Éú³É¶ÔÓ¦µÄ¶ş½øÖÆÎÄ¼ş
-	EndCode();//´¦ÀíÎÄ¼şÖĞ²»ÄÜÂíÉÏÈ·¶¨¶ş½øÖÆÖµµÄÎ»ÖÃ£¬½øĞĞÊÕÎ²¹¤×÷
-	FileOut();
-	cout << "±àÒëÍê³É" << endl;
-	cout << "Ğ´Èë×Ö½ÚÊı£º\t" << FileSize << "\tbyte" << endl;
-	cin.get();
-	cin.get();
+	int i, n = 0;
+	if (argc == 1)return 0;
+	for (i = 1; i < argc; ++i) {
+		FileSize = 0;//´¢´æÉú³ÉµÄÎÄ¼ş´óĞ¡
+	Number = 0;//´¢´æÆ«ÒÆµØÖ·
+	Line_num = 1;//ĞĞºÅ
+	is_Title = false;//±êÖ¾Î»£¬Èô´ËÖµÎªtrueËµÃ÷CutStrCode()º¯ÊıÔÚ´úÂëĞĞÖĞÕÒµ½ÁË¡®:¡¯,Èô±í´ïÊ½ÎªÕæ£¬ÅĞ¶ÏºóÓ¦ÖØĞÂ¸³ÖµÎªfalse
+		fin_src = argv[i];
+		cout<<"code file="<<fin_src<<endl;
+		if (fin_src.rfind(".asm") == 0) {//.asmÎª»ã±à´úÂëÎÄ¼ş£¬Èç¹û²»ÊÇ£¬Õı³£±àÒë£¬µ«ÌáÊ¾ºó×ºÃû³ö´í
+			cout << "The suffix name is not \".asm\"" << endl;//ÌáÊ¾ºó×ºÃûÓĞÎÊÌâ£¬¼ÌĞø±àÒë
+		}
+		n = fin_src.rfind(".");
+		if (n == 0)return 0;
+		fout_src = fin_src.substr(0, n)+".bin";
+		CompileCode();//´¦ÀíÔ´ÎÄ¼şÁ÷ÎÄ±¾´úÂë£¬Éú³É¶ÔÓ¦µÄ¶ş½øÖÆÎÄ¼ş
+		EndCode();//´¦ÀíÎÄ¼şÖĞ²»ÄÜÂíÉÏÈ·¶¨¶ş½øÖÆÖµµÄÎ»ÖÃ£¬½øĞĞÊÕÎ²¹¤×÷
+		FileOut();
+		cout << "file size=\t" << FileSize << "\tbyte" << endl<<endl;
+	}
+	cout << endl<<"compile done." << endl;
 	return 0;
 }
 //CompileCode()Ê¶±ğÊ¶±ğÖ¸Áî×Ö·û´®£¬²¢½øĞĞÏàÓ¦µÄ´¦Àí
@@ -66,38 +76,40 @@ void CompileCode(void)
 {
 	using namespace std;
 	ifstream fin(fin_src);
-	if (fin.is_open())cout << "***Ô´ÎÄ¼ş´ò¿ª³É¹¦***" << endl;
-	else cout << "Ô´ÎÄ¼ş´ò¿ªÊ§°Ü!" << endl;
+	if (!fin.is_open()){
+		cout << "Ô´ÎÄ¼ş´ò¿ªÊ§°Ü!" << endl;
+		return;
+	}
 	string Line;//´¢´æÒ»ĞĞÎÄ±¾
 	string CodeStr;//´¢´æÖ¸Áî×Ö·û´®
 	vector<unsigned char>d;
 	int i = 0;//lineÖĞ×Ö·ûµÄÎ»ÖÃ
-	while (getline(fin, Line)){
+	while (getline(fin, Line)) {
 		cout << Line_num << "\t" << Line << endl;//Êä³öÕıÔÚ´¦ÀíµÄÎÄ±¾ĞĞ
 		//µÚ2¸öwhileµÄ×÷ÓÃ£¬¹ıÂËµôÎÄ±¾ĞĞ¿ªÍ·µÄ¿Õ¸ñ£¬Ìø¸ñ£¬×¢ÊÍ£¬»»ĞĞµÈÎŞ¹Ø×Ö·û£¬±£Ö¤¼æÈİĞÔ
 		//´¦Àí±¾ĞĞÎÄ±¾£¬Ö®ËùÒÔ²»Ê¹ÓÃwhile(?)i++;ÊÇÎªÁË±£Ö¤¶ÁÈ¡µ½±êºÅÖ®ºóµÄÖ¸ÁîµÄÕı³£´¦Àí
-		while (i<(int)Line.size() && Line[i] != '\n' &&Line[i] != '\0' &&Line[i] != ';'){
+		while (i < (int)Line.size() && Line[i] != '\n' && Line[i] != '\0' && Line[i] != ';') {
 			//Ìø¹ı¿Õ¸ñ£¬TAB
-			if (Line[i] == 0x20 || Line[i] == '\t' || Line[i] == ':' || Line[i] == ','){
+			if (Line[i] == 0x20 || Line[i] == '\t' || Line[i] == ':' || Line[i] == ',') {
 				i++; continue;
 			}
 			//ÅĞ¶ÏÊÇ·ñ°üº¬±êºÅ£¨´úÂëÖĞÓĞÃ»ÓĞÃ°ºÅ¡®£º¡¯£©
 			CodeStr = CutStrCode(Line, i);
 			i += CodeStr.size();
-			if (is_Title){
+			if (is_Title) {
 				t.str = CodeStr;
 				t.num = Number;
 				t.s = FileSize;
 				Title.push_back(t);
 				is_Title = false;
 			}
-			else{//½øÈëÖ¸ÁîÅĞ¶Ï
-				if (MOV){
+			else {//½øÈëÖ¸ÁîÅĞ¶Ï
+				if (MOV) {
 					d = MOVE(Line, i, Number);
-					if (d.size() >1 && d.size()<4){
+					if (d.size() > 1 && d.size() < 4) {
 						Data_put(d);
 					}
-					else if (d.size()>3){
+					else if (d.size() > 3) {
 						//ÅĞ¶ÏÎª±êºÅ,±£´æ±êºÅ×Ö·û´®
 						t.str = CutStr(Line, Line.find(',') + 1);
 						t.s = FileSize;
@@ -109,23 +121,23 @@ void CompileCode(void)
 						Number += (d.size() - (int)d[3]);
 					}
 				}
-				else if (DB){
+				else if (DB) {
 					Data_put(DataBWD(Line, i, 1, Number));
-					
+
 				}
-				else if (DW){
+				else if (DW) {
 					Data_put(DataBWD(Line, i, 2, Number));
 				}
-				else if (DD){
+				else if (DD) {
 					Data_put(DataBWD(Line, i, 4, Number));
 				}
-				else if (ADD){
+				else if (ADD) {
 					Data_put(Additive(Line, i, Number));
 				}
-				else if (SUB){
+				else if (SUB) {
 					Data_put(Subtraction(Line, i, Number));
 				}
-				else if (JMP){
+				else if (JMP) {
 					d = Jemp();
 					//½«±êºÅÍÆÈëjpÊı×é
 					t.str = CutStr(Line, i);
@@ -134,7 +146,7 @@ void CompileCode(void)
 					Data_put(d);
 					jp_p.push_back(t);
 				}
-				else if (JE || JZ){
+				else if (JE || JZ) {
 					d = Je();
 					//½«±êºÅÍÆÈëjpÊı×é
 					t.str = CutStr(Line, i);
@@ -143,7 +155,7 @@ void CompileCode(void)
 					Data_put(d);
 					je_p.push_back(t);
 				}
-				else if (JB){
+				else if (JB) {
 					d = Jb();
 					//½«±êºÅÍÆÈëjpÊı×é
 					t.str = CutStr(Line, i);
@@ -152,7 +164,7 @@ void CompileCode(void)
 					Data_put(d);
 					jb_p.push_back(t);
 				}
-				else if (JBE){
+				else if (JBE) {
 					d = Jbe();
 					//½«±êºÅÍÆÈëjpÊı×é
 					t.str = CutStr(Line, i);
@@ -161,18 +173,18 @@ void CompileCode(void)
 					Data_put(d);
 					jbe_p.push_back(t);
 				}
-				else if (SHR){
+				else if (SHR) {
 					Data_put(Shl_Shr(Line, i, Number, 0xe8));
 				}
-				else if (SHR){
+				else if (SHR) {
 					Data_put(Shl_Shr(Line, i, Number, 0xe0));
 				}
-				else if (PUSH){
+				else if (PUSH) {
 					d = Push(Line, i, Number);
-					if ((int)d.size() > 0){
+					if ((int)d.size() > 0) {
 						Data_put(d);
 					}
-					else{
+					else {
 						//ËµÃ÷Îª±êºÅ£¬½«±êºÅÖµÍÆÈëpush_pÊı×é
 						t.str = CutStr(Line, i);
 						t.num = Number;
@@ -185,45 +197,45 @@ void CompileCode(void)
 						FileSize += 2;
 					}
 				}
-				else if (POP){
+				else if (POP) {
 					Data_put(Pop(Line, i));
 				}
-				else if (CMP){
+				else if (CMP) {
 					Data_put(Cmp(Line, i, Number));
 				}//³Ë·¨Ö¸Áî
-				else if (MUL){
+				else if (MUL) {
 					Data_put(Mul(Line, i));
 				}
-				else if (OR){
+				else if (OR) {
 					Data_put(Logic(Line, i, Number, 'o'));
 				}
-				else if (XOR){
+				else if (XOR) {
 					Data_put(Logic(Line, i, Number, 'x'));
 				}
-				else if (AND){
+				else if (AND) {
 					Data_put(Logic(Line, i, Number, 'a'));
 				}
-				else if (NOT){
+				else if (NOT) {
 					Data_put(Not(Line, i));
 				}
-				else if (RESB){
+				else if (RESB) {
 					DataChar(ReserveByte(Line, i, FileSize), '\0');
 				}
-				else if (INT){
+				else if (INT) {
 					Data_put(Int(Line, i, Number));
 				}
-				else if (ORG){
+				else if (ORG) {
 					Number = Organ(Line, i, Number);
 				}
-				else if (HLT){
+				else if (HLT) {
 					Data.push_back(0xf4);
 					FileSize++;
 					Number++;
 				}
-				else if (IN){
+				else if (IN) {
 					Data_put(In_Out(Line, i, Number, 'i'));
 				}
-				else if (OUT){
+				else if (OUT) {
 					Data_put(In_Out(Line, i, Number, 'o'));
 				}
 				else {
@@ -246,24 +258,24 @@ void EndCode(void)
 	std::vector<unsigned char>data;
 	short d;
 	for (i = 0; i < (int)Title.size(); ++i)
-	for (j = 0; j < (int)Mov_place.size(); ++j){
-		if (Title[i].str == Mov_place[j].str){
-			d = isReg(Data[Mov_place[j].s]);
-			//½«¼ÆËã½á¹û´úÈëdata
-			if (d == 1){
-				data = NumToUc(Title[i].num, 1);
-				Data[Mov_place[j].s + 1] = data[0];
-			}
-			else if (d == 2){
-				data = NumToUc(Title[i].num, 2);
-				Data[Mov_place[j].s + 1] = data[0];
-				Data[Mov_place[j].s + 2] = data[1];
-			}
-			else{
-				std::cout << "³¬·¶Î§£¡error-006!\n";
+		for (j = 0; j < (int)Mov_place.size(); ++j) {
+			if (Title[i].str == Mov_place[j].str) {
+				d = isReg(Data[Mov_place[j].s]);
+				//½«¼ÆËã½á¹û´úÈëdata
+				if (d == 1) {
+					data = NumToUc(Title[i].num, 1);
+					Data[Mov_place[j].s + 1] = data[0];
+				}
+				else if (d == 2) {
+					data = NumToUc(Title[i].num, 2);
+					Data[Mov_place[j].s + 1] = data[0];
+					Data[Mov_place[j].s + 2] = data[1];
+				}
+				else {
+					std::cout << "³¬·¶Î§£¡error-006!\n";
+				}
 			}
 		}
-	}
 	//´¦ÀíjmpÖ¸Áî
 	jmpch();
 }
@@ -273,13 +285,13 @@ std::string CutStrCode(const std::string& str, int num = 0)//ÅĞ¶ÏÊÇ·ñº¬ÓĞ±êºÅ£¬Ã
 	using namespace std;
 	std::string m;
 	//¶ªÈ¥¿ªÍ·²¿·Ö¿ÉÄÜ´æÔÚµÄÎŞ¹Ø×Ö·û£¬0x20Îª¿Õ¸ñ
-	while (num<(int)str.size()){
-		if (str[num] != 0x20 && str[num] != '\t' &&str[num] != ',')break;
+	while (num < (int)str.size()) {
+		if (str[num] != 0x20 && str[num] != '\t' && str[num] != ',')break;
 		num++;
 	}
 	//½ØÈ¡×Ö·û´®
-	while (num<(int)str.size() && (isalnum(str[num]) || str[num] == '$' || str[num] == ':' || str[num] == '_')){
-		if (str[num] == ':'){
+	while (num < (int)str.size() && (isalnum(str[num]) || str[num] == '$' || str[num] == ':' || str[num] == '_')) {
+		if (str[num] == ':') {
 			is_Title = true;
 			break;
 		}
@@ -299,8 +311,8 @@ void FileOut(void)
 {
 	using namespace std;
 	std::ofstream fout(fout_src, std::ios::binary);
-	if (!fout.is_open())cout <<endl<< "ÎÄ¼şĞ´ÈëÊ§°Ü!" << endl;
-	for (int i = 0; i<(int)Data.size(); i++){
+	if (!fout.is_open())cout << endl << "ÎÄ¼şĞ´ÈëÊ§°Ü!" << endl;
+	for (int i = 0; i < (int)Data.size(); i++) {
 		fout.put(Data[i]);
 	}
 	fout.close();
@@ -309,12 +321,12 @@ void FileOut(void)
 void DataChar(int n, unsigned char ch)
 {
 	using namespace std;
-	if (n>0){
+	if (n > 0) {
 		Data.insert(Data.end(), n, ch);
 		FileSize += n;
 		Number += n;
 	}
-	else if(n<0){
+	else if (n < 0) {
 		cout << "´íÎó-027£¡£¬Çë¼ì²éresbÖ¸Áî²ÎÊı£¡£¬²Ù×÷Êı²»ÄÜĞ¡ÓÚ0" << endl;
 	}
 }
@@ -325,94 +337,94 @@ void jmpch(void)
 	int i, j, n, k = 50;//k×î¸ßÑ­»·´ÎÊı
 	vector<unsigned char>d;
 	//×¢£º²»½¨ÒéÊ¹ÓÃ¶à²ãifÌ×Ç¶
-	for (i = 0; i<(int)Title.size(); i++)
-	for (j = k - 1; j >= 0; j--){
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-		if (j<(int)jp_p.size()){//±¾Óï¾ä±ÜÃâÊı×éµ÷ÓÃ³¬·¶Î§
-			if (Title[i].str == jp_p[j].str){
-				//jpÊı×é´¦Àí
-				n = Title[i].num - jp_p[j].num - 2;
-				if (n>0x7f){//Èç¹ûn=0x80£¬ËµÃ÷±¾jmpÖ¸ÁîÕ¼3×Ö·û£¬½«»úÆ÷Âë¸üĞÂÎª0xe9,0xxx,0xxx
-					Data[jp_p[j].s] = 0xe9;
-					//½«n×ª»»Îª¶ÔÓ¦µÄ¿ÉÊä³ö»úÆ÷Âë
-					d = NumToUc(n - 1, 2);
-					Data[jp_p[j].s + 1] = d[0];
-					Data.insert(Data.begin() + jp_p[j].s + 2, 1, d[1]);
-				}
-				else{
-					d = NumToUc(n, 1);
-					Data[jp_p[j].s + 1] = d[0];
-				}
-			}
-		}
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-		if (j < (int)je_p.size()){
-			if (Title[i].str == je_p[j].str){
-				n = Title[i].num - je_p[j].num - 2;
-				if (n>0x7f){
-					Data[je_p[j].s] = 0x0f;
-					Data[je_p[j].s + 1] = 0x84;
-					d = NumToUc(n, 2);
-					Data.insert(Data.begin() + je_p[j].s + 2, d.begin(), d.end());
-				}
-				else{
-					d = NumToUc(n, 1);
-					Data[je_p[j].s + 1] = d[0];
+	for (i = 0; i < (int)Title.size(); i++)
+		for (j = k - 1; j >= 0; j--) {
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
+			if (j < (int)jp_p.size()) {//±¾Óï¾ä±ÜÃâÊı×éµ÷ÓÃ³¬·¶Î§
+				if (Title[i].str == jp_p[j].str) {
+					//jpÊı×é´¦Àí
+					n = Title[i].num - jp_p[j].num - 2;
+					if (n > 0x7f) {//Èç¹ûn=0x80£¬ËµÃ÷±¾jmpÖ¸ÁîÕ¼3×Ö·û£¬½«»úÆ÷Âë¸üĞÂÎª0xe9,0xxx,0xxx
+						Data[jp_p[j].s] = 0xe9;
+						//½«n×ª»»Îª¶ÔÓ¦µÄ¿ÉÊä³ö»úÆ÷Âë
+						d = NumToUc(n - 1, 2);
+						Data[jp_p[j].s + 1] = d[0];
+						Data.insert(Data.begin() + jp_p[j].s + 2, 1, d[1]);
+					}
+					else {
+						d = NumToUc(n, 1);
+						Data[jp_p[j].s + 1] = d[0];
+					}
 				}
 			}
-		}
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-		//JBÓï¾ä
-		if (j < (int)jb_p.size()){
-			if (Title[i].str == jb_p[j].str){
-				n = Title[i].num - jb_p[j].num - 2;
-				if (n>0x7f){
-					Data[jb_p[j].s] = 0x0f;
-					Data[jb_p[j].s + 1] = 0x82;
-					d = NumToUc(n, 2);
-					Data.insert(Data.begin() + jb_p[j].s + 2, d.begin(), d.end());
-				}
-				else{
-					d = NumToUc(n, 1);
-					Data[jb_p[j].s + 1] = d[0];
-				}
-			}
-		}
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-		if (j < (int)jbe_p.size()){
-			if (Title[i].str == jbe_p[j].str){
-				n = Title[i].num - jbe_p[j].num - 2;
-				if (n>0x7f){
-					Data[jbe_p[j].s] = 0x0f;
-					Data[jbe_p[j].s + 1] = 0x86;
-					d = NumToUc(n, 2);
-					Data.insert(Data.begin() + jbe_p[j].s + 2, d.begin(), d.end());
-				}
-				else{
-					d = NumToUc(n, 1);
-					Data[jbe_p[j].s + 1] = d[0];
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
+			if (j < (int)je_p.size()) {
+				if (Title[i].str == je_p[j].str) {
+					n = Title[i].num - je_p[j].num - 2;
+					if (n > 0x7f) {
+						Data[je_p[j].s] = 0x0f;
+						Data[je_p[j].s + 1] = 0x84;
+						d = NumToUc(n, 2);
+						Data.insert(Data.begin() + je_p[j].s + 2, d.begin(), d.end());
+					}
+					else {
+						d = NumToUc(n, 1);
+						Data[je_p[j].s + 1] = d[0];
+					}
 				}
 			}
-		}
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-		if (j<(int)push_p.size()){
-			//push_pÊı×é´¦Àí
-			if (Title[i].str == push_p[j].str){
-				//jpÊı×é´¦Àí
-				n = Title[i].num;
-				if (n>0x7f){//Èç¹ûn=0x80£¬ËµÃ÷±¾jmpÖ¸ÁîÕ¼3×Ö·û£¬½«»úÆ÷Âë¸üĞÂÎª0xe9,0xxx,0xxx
-					Data[push_p[j].s] = 0x68;
-					//½«n×ª»»Îª¶ÔÓ¦µÄ¿ÉÊä³ö»úÆ÷Âë
-					d = NumToUc(n, 2);
-					Data[push_p[j].s + 1] = d[0];
-					Data.insert(Data.begin() + push_p[j].s + 2, 1, d[1]);
-				}
-				else{
-					d = NumToUc(n, 1);
-					Data[push_p[j].s + 1] = d[0];
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
+			//JBÓï¾ä
+			if (j < (int)jb_p.size()) {
+				if (Title[i].str == jb_p[j].str) {
+					n = Title[i].num - jb_p[j].num - 2;
+					if (n > 0x7f) {
+						Data[jb_p[j].s] = 0x0f;
+						Data[jb_p[j].s + 1] = 0x82;
+						d = NumToUc(n, 2);
+						Data.insert(Data.begin() + jb_p[j].s + 2, d.begin(), d.end());
+					}
+					else {
+						d = NumToUc(n, 1);
+						Data[jb_p[j].s + 1] = d[0];
+					}
 				}
 			}
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
+			if (j < (int)jbe_p.size()) {
+				if (Title[i].str == jbe_p[j].str) {
+					n = Title[i].num - jbe_p[j].num - 2;
+					if (n > 0x7f) {
+						Data[jbe_p[j].s] = 0x0f;
+						Data[jbe_p[j].s + 1] = 0x86;
+						d = NumToUc(n, 2);
+						Data.insert(Data.begin() + jbe_p[j].s + 2, d.begin(), d.end());
+					}
+					else {
+						d = NumToUc(n, 1);
+						Data[jbe_p[j].s + 1] = d[0];
+					}
+				}
+			}
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
+			if (j < (int)push_p.size()) {
+				//push_pÊı×é´¦Àí
+				if (Title[i].str == push_p[j].str) {
+					//jpÊı×é´¦Àí
+					n = Title[i].num;
+					if (n > 0x7f) {//Èç¹ûn=0x80£¬ËµÃ÷±¾jmpÖ¸ÁîÕ¼3×Ö·û£¬½«»úÆ÷Âë¸üĞÂÎª0xe9,0xxx,0xxx
+						Data[push_p[j].s] = 0x68;
+						//½«n×ª»»Îª¶ÔÓ¦µÄ¿ÉÊä³ö»úÆ÷Âë
+						d = NumToUc(n, 2);
+						Data[push_p[j].s + 1] = d[0];
+						Data.insert(Data.begin() + push_p[j].s + 2, 1, d[1]);
+					}
+					else {
+						d = NumToUc(n, 1);
+						Data[push_p[j].s + 1] = d[0];
+					}
+				}
+			}
+			//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
 		}
-		//------------------------Óï¾ä¿é·Ö¸îÏß-----------------------------//
-	}
 }
